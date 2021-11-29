@@ -1,10 +1,9 @@
 var boutons = Array.from(document.getElementsByTagName("button"));
 var screen = document.getElementById("screen");
-var historique = document.getElementById("historique");
+var historique = document.getElementById("historique-body");
 // Récupération de la variable local historique qui contient la class display à associer.
 var dChoice = localStorage.getItem("historique");
 historique.setAttribute("class", dChoice);
-
 
 boutons.map((btn) => {
   btn.addEventListener("click", () => {

@@ -4,13 +4,20 @@ $filename = 'historique.txt';
 if (file_exists($filename)) {
     $handle = fopen($filename, 'r+');
     $fichier = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+} else {
+    echo '<div class="text-align-center alert alert-danger">
+            <p>Veuillez créer un fichier, et nommez le historique.txt</p>
+          </div>';
 }
+
 if (isset($_POST['save'])) {
+    //  Si l'utilisateur souhaite enregistré sans avoir saisi de donnée, l'application renvoie une erreure.
     if ($_POST['calcule'] === "") {
         echo '<div class="text-align-center alert alert-danger">
             <p>Veuillez saisir au moins une donnée</p>
           </div>';
     } else {
+        // sinon il ajoute la date actuel concatenée au contenu de la variable superglobale $_POST.
         file_put_contents($filename, date('d-m') . ": " . $_POST['calcule'] . "\n", FILE_APPEND);
         header('Refresh:1');
         echo '<div class="text-align-center">
@@ -35,11 +42,11 @@ if (isset($_POST['save'])) {
     <p>Edmond Duquesney</p>
     <div class="container">
         <form method="post">
-            <div class="calculator">
-                <div class="calculator-screen">
+            <div class="calculatrice">
+                <div class="calculatrice-screen">
                     <input type="text" name="screen" id="screen" disabled />
                 </div>
-                <div class="calculator-body">
+                <div class="calculatrice-body">
                     <input type="hidden" id="calcule" name="calcule" value="">
                     <div class="col">
                         <button title="afficher l'historique" type="button" value="historique">H</button>
@@ -72,18 +79,24 @@ if (isset($_POST['save'])) {
                 </div>
             </div>
         </form>
-        <div class="" id="historique">
+        <div class="" id="historique-body">
             <h1>Historique</h1>
             <div class="historique-item">
-                <?php if (count($fichier) === 0) { ?>
-
+                <!-- Si le fichier ne possède aucune affiche que l'historique est vide -->
+                <!-- Sinon il affiche la liste des calculs que contient le fichier -->
+                <?php
+                if (file_exists($filename)) {
+                    if (count($fichier) === 0) { ?>
+                        <p class="alert alert-warning">L'historique est vide</p>
+                        <?php } else {
+                        foreach ($fichier as $line) { ?>
+                            <p class="alert alert-info"><?= $line ?></p>
+                    <?php }
+                    }
+                } else { ?>
                     <p class="alert alert-warning">L'historique est vide</p>
-
-                    <?php } else {
-                    foreach ($fichier as $line) { ?>
-                        <p class="alert alert-info"><?= $line ?></p>
-                <?php }
-                } ?>
+                <?php  }
+                ?>
             </div>
         </div>
     </div>
