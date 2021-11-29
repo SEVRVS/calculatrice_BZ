@@ -75,7 +75,15 @@ if (isset($_POST['save'])) {
         <div class="" id="historique">
             <h1>Historique</h1>
             <div class="historique-item">
-                <p class="alert alert-warning">L'historique est vide</p>
+                <?php if (count($fichier) === 0) { ?>
+
+                    <p class="alert alert-warning">L'historique est vide</p>
+
+                    <?php } else {
+                    foreach ($fichier as $line) { ?>
+                        <p class="alert alert-info"><?= $line ?></p>
+                <?php }
+                } ?>
             </div>
         </div>
     </div>
