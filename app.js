@@ -5,6 +5,7 @@ var historique = document.getElementById("historique");
 var dChoice = localStorage.getItem("historique");
 historique.setAttribute("class", dChoice);
 
+
 boutons.map((btn) => {
   btn.addEventListener("click", () => {
     switch (btn.value) {
@@ -24,6 +25,7 @@ boutons.map((btn) => {
           var result = eval(screen.value);
           var calculeStr = screen.value + "=" + result;
           screen.value = result;
+          document.getElementById('calcule').value = calculeStr;
         } catch {
           // Si une erreure est détectée.
           btn.disabled = "true";

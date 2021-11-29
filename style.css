@@ -42,3 +42,13 @@ button:active {
   height: 400px;
   overflow-x: auto;
 }
+#save{
+    width: 50px;
+    height: 50px;
+    background-color: lightgray;
+    border: none;
+}
+#save:active {
+    background-color: #3e3d3d;
+    color: white;
+  }

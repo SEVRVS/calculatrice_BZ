@@ -1,3 +1,24 @@
+<?php
+
+$filename = 'historique.txt';
+if (file_exists($filename)) {
+    $handle = fopen($filename, 'r+');
+    $fichier = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+}
+if (isset($_POST['save'])) {
+    if ($_POST['calcule'] === "") {
+        echo '<div class="text-align-center alert alert-danger">
+            <p>Veuillez saisir au moins une donnée</p>
+          </div>';
+    } else {
+        file_put_contents($filename, date('d-m') . ": " . $_POST['calcule'] . "\n", FILE_APPEND);
+        header('Refresh:1');
+        echo '<div class="text-align-center">
+            <h1>La page se recharge</h1>
+          </div>';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -13,12 +34,13 @@
 <body>
     <p>Edmond Duquesney</p>
     <div class="container">
-        <form action="post">
+        <form method="post">
             <div class="calculator">
                 <div class="calculator-screen">
                     <input type="text" name="screen" id="screen" disabled />
                 </div>
                 <div class="calculator-body">
+                    <input type="hidden" id="calcule" name="calcule" value="">
                     <div class="col">
                         <button title="afficher l'historique" type="button" value="historique">H</button>
                         <button title="Nettoyer" type="button" value="clear">C</button>
@@ -45,7 +67,7 @@
                     </div>
                     <div class="col">
                         <button type="button" value="0">0</button>
-                        <button title="Enregistrer le calcul" type="submit" value="save">S</button>
+                        <input title="Enregistrer le calcul" id="save" type="submit" name="save" value="S">
                     </div>
                 </div>
             </div>
